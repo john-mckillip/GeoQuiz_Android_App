@@ -15,7 +15,9 @@ public class CheatActivity extends Activity {
     private static final String TAG = "CheatActivity";
     public static final String EXTRA_ANSWER_IS_TRUE = "com.bignerdranch.android.geoquiz.answer_is_true";
     public static final String EXTRA_ANSWER_SHOWN = "com.bignerdrance.android.geoquiz.answer_shown";
+    public static final String IS_A_CHEATER = "FuckingCheater";
 
+    private boolean isACheater = false;
     private boolean mAnswerIsTrue;
     private TextView mAnswerTextView;
     private Button mShowAnswer;
@@ -49,9 +51,22 @@ public class CheatActivity extends Activity {
                     mAnswerTextView.setText(R.string.false_button);
                 }
                 setAnswerShownResult(true);
+                isACheater = true;
+
             }
         });
+
+        if (savedInstanceState != null) {
+            setAnswerShownResult(savedInstanceState.getBoolean(IS_A_CHEATER));
+        }
     }
 
-
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        if (isACheater == true) {
+            savedInstanceState.putBoolean(IS_A_CHEATER, true);
+        }
+    }
 }
