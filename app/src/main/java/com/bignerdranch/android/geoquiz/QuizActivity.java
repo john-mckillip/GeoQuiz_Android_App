@@ -17,6 +17,7 @@ public class QuizActivity extends ActionBarActivity {
 
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
+    public static final String IS_A_CHEATER = "FuckingCheater";
     private Button mTrueButton;
     private Button mFalseButton;
     private ImageButton mNextButton;
@@ -54,6 +55,7 @@ public class QuizActivity extends ActionBarActivity {
                 messageResId = R.string.incorrect_toast;
             }
         }
+
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
 
@@ -114,6 +116,7 @@ public class QuizActivity extends ActionBarActivity {
 
         if (savedInstanceState != null) {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+            mIsCheater = savedInstanceState.getBoolean(IS_A_CHEATER);
         }
 
         mCheatButton = (Button)findViewById(R.id.cheat_button);
@@ -144,6 +147,9 @@ public class QuizActivity extends ActionBarActivity {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSaveInstanceState");
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+        if (mIsCheater) {
+            savedInstanceState.putBoolean(IS_A_CHEATER, true);
+        }
     }
 
     @Override
