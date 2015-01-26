@@ -47,8 +47,14 @@ public class QuizActivity extends ActionBarActivity {
 
         int messageResId = 0;
 
+        if (mCurrentIndex == mCheatIndex) {
+            mIsCheater = true;
+        } else {
+            mIsCheater = false;
+        }
         if (mIsCheater) {
             messageResId = R.string.judgment_toast;
+            mCheatIndex = mQuestionBank.length + 1;
         } else {
             if (userPressedTrue == answerIsTrue) {
                 messageResId = R.string.correct_toast;
@@ -56,7 +62,6 @@ public class QuizActivity extends ActionBarActivity {
                 messageResId = R.string.incorrect_toast;
             }
         }
-
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
 
@@ -110,14 +115,7 @@ public class QuizActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                if (mCurrentIndex == mCheatIndex) {
-                    mIsCheater = true;
-                    mCheatIndex = mQuestionBank.length + 1;
-                    updateQuestion();
-                } else {
-                    mIsCheater = false;
-                    updateQuestion();
-                }
+                updateQuestion();
             }
         });
 
