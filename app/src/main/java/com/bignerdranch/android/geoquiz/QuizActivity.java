@@ -34,6 +34,7 @@ public class QuizActivity extends ActionBarActivity {
     };
 
     private int mCurrentIndex = 0;
+    private int mCheatIndex = mQuestionBank.length + 1;
     private boolean mIsCheater;
 
     private void updateQuestion() {
@@ -109,8 +110,14 @@ public class QuizActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                mIsCheater = false;
-                updateQuestion();
+                if (mCurrentIndex == mCheatIndex) {
+                    mIsCheater = true;
+                    mCheatIndex = mQuestionBank.length + 1;
+                    updateQuestion();
+                } else {
+                    mIsCheater = false;
+                    updateQuestion();
+                }
             }
         });
 
@@ -130,7 +137,6 @@ public class QuizActivity extends ActionBarActivity {
                 startActivityForResult(i, 0);
             }
         });
-
         updateQuestion();
     }
 
@@ -140,6 +146,7 @@ public class QuizActivity extends ActionBarActivity {
             return;
         }
         mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_SHOWN, false);
+        mCheatIndex = mCurrentIndex;
     }
 
     @Override
@@ -149,6 +156,7 @@ public class QuizActivity extends ActionBarActivity {
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
         if (mIsCheater) {
             savedInstanceState.putBoolean(IS_A_CHEATER, true);
+            mCheatIndex = mCurrentIndex;
         }
     }
 

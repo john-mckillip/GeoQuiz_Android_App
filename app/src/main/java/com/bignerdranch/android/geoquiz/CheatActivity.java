@@ -2,6 +2,7 @@ package com.bignerdranch.android.geoquiz;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ public class CheatActivity extends Activity {
     public static final String EXTRA_ANSWER_IS_TRUE = "com.bignerdranch.android.geoquiz.answer_is_true";
     public static final String EXTRA_ANSWER_SHOWN = "com.bignerdrance.android.geoquiz.answer_shown";
     public static final String IS_A_CHEATER = "FuckingCheater";
+    private static final Integer API_LEVEL = Build.VERSION.SDK_INT;
 
     private boolean isACheater = false;
     private boolean mAnswerIsTrue;
